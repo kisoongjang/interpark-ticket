@@ -2,12 +2,83 @@
 <html>
   <head>
     <title>지혜씨를 위한 헌정페이지</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
   </head>
+
   <body>
-    <h1>조승우 예약 현황(베타버전)</h1>
-    <h2>추후 업데이트 : 문자알림, UI개선</h2>
-    <div class="app"></div>
+    <header>
+      <div class="navbar navbar-dark bg-dark shadow-sm">
+        <div class="container">
+          <a href="#" class="navbar-brand d-flex align-items-center">
+            <strong>헤드윅 조승우 예약현황 보기</strong>
+          </a>
+        </div>
+      </div>
+    </header>
+    <main>
+      <section class="py-5 text-center container">
+        <div class="row py-lg-5">
+          <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="fw-light">헤드윅 조승우차 예매 가능한가요?</h1>
+            <p class="lead text-muted">지금은 예매가 불가능합니다.</p>
+            <p>
+              <a
+                href="https://tickets.interpark.com/goods/21005689"
+                class="btn btn-primary my-2"
+                target="_blank"
+                >인터파크 예매가기</a
+              >
+            </p>
+          </div>
+        </div>
+      </section>
+      <div class="album py-5 bg-light">
+        <div class="container">
+          <div
+            class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4"
+            id="app"
+          ></div>
+        </div>
+      </div>
+    </main>
+    <footer class="text-muted py-5">
+      <div class="container">
+        <p class="float-end mb-1"><a href="#">Back to top</a></p>
+        <p class="mb-1">예매가 너무 하고 싶어서 만들어버린 페이지..</p>
+      </div>
+    </footer>
+    <script
+      src="/docs/5.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+
     <script>
       $(document).ready(() => {
         $.ajax({
@@ -21,11 +92,35 @@
                 list += `<li>${data[i].remainSeat[j].seatGradeName} : ${data[i].remainSeat[j].remainCnt}석</li>`;
               }
 
-              let template = `<h3>날짜 : ${data[i].date}</h3>
-                            <h3>시간 : ${data[i].time}</span></h3>
-                            <h3>좌석현황</h3>
-                            <ul>${list}</ul><br/><br/><br/>`;
-              $('.app').append(template);
+              let contents = `<h3>날짜 : ${data[i].date}</h3>
+                                  <h3>시간 : ${data[i].time}</span></h3>
+                                  <h3>좌석현황</h3>
+                                  <ul>${list}</ul><br/><br/><br/>`;
+              let template = `            <div class="col">
+              <div class="card shadow-sm">
+                <img
+                  src="http://ticketimage.interpark.com/PlayDictionary/DATA/PlayDic/PlayDicUpload/Magazine/2021/06/23_071122.jpg"
+                />
+                <div class="card-body">
+                  <p class="card-text">
+                   ${contents}
+                  </p>
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <div class="btn-group">
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-secondary"
+                      >
+                        예매하러 가기
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>`;
+              $('#app').append(template);
             }
           },
         });
