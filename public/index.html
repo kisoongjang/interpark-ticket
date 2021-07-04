@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>지혜씨를 위한 헌정페이지</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  </head>
+  <body>
+    <h1>조승우 예약 현황(베타버전)</h1>
+    <h2>추후 업데이트 : 문자알림, UI개선</h2>
+    <div class="app"></div>
+    <script>
+      $(document).ready(() => {
+        $.ajax({
+          url: '/reservation',
+          success: function (data) {
+            console.log(data);
+
+            for (let i = 0; i < data.length; i++) {
+              let list = '';
+              for (let j = 0; j < data[i].remainSeat.length; j++) {
+                list += `<li>${data[i].remainSeat[j].seatGradeName} : ${data[i].remainSeat[j].remainCnt}석</li>`;
+              }
+
+              let template = `<h3>날짜 : ${data[i].date}</h3>
+                            <h3>시간 : ${data[i].time}</span></h3>
+                            <h3>좌석현황</h3>
+                            <ul>${list}</ul><br/><br/><br/>`;
+              $('.app').append(template);
+            }
+          },
+        });
+      });
+    </script>
+  </body>
+</html>
